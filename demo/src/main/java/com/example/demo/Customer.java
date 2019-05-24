@@ -1,5 +1,6 @@
 package com.example.demo;
-
+import java.util.Random;
+import java.lang.Math; 
 public class Customer {
 	private Long id;
 	private String firstName, lastName;
@@ -8,6 +9,13 @@ public class Customer {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		
+	}
+	public Customer () {
+		Random rand = new Random();
+		this.id = Math.abs(rand.nextLong());
+		this.firstName = "";
+		this.lastName = "";
 		
 	}
 

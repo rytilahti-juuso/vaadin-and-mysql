@@ -20,18 +20,19 @@ public class VaadinUI extends UI {
     @Autowired
     private CustomerService service;
 
-    private Customer customer;
+    private Customer editCustomer;
     private Binder<Customer> binder = new Binder<>(Customer.class);
 
-    private Grid<Customer> grid = new Grid(Customer.class);
+    private Grid<Customer> grid = new Grid<Customer>(Customer.class);
     private TextField firstName = new TextField("First name");
     private TextField lastName = new TextField("Last name");
-    private Button save = new Button("Save", e -> saveCustomer());
-//    omaa shaissee
+    private Button save = new Button("Save", e -> saveEditedCustomer());
+//    added variables
+    private Customer addCustomer = new Customer();
     private Button add =  new Button("add", e -> setAddFormVisible(true));
     private TextField firstNameAdd = new TextField("First name");
     private TextField lastNameAdd = new TextField("Last name");
-    private Button saveNewCustomer = new Button("save");
+    private Button saveNewCustomer = new Button("save", e -> saveNewCustomer());
     @Override
     protected void init(VaadinRequest request) {
         updateGrid();
@@ -39,7 +40,10 @@ public class VaadinUI extends UI {
         grid.addSelectionListener(e -> updateForm());
 
         binder.bindInstanceFields(this);
-
+        
+        firstNameAdd.addValueChangeListener(e -> addCustomer.setFirstName(e.getValue()));
+        lastNameAdd.addValueChangeListener(e -> addCustomer.setLastName(e.getValue()));
+        
         VerticalLayout layout = new VerticalLayout(add, grid, firstName, lastName, save);
         VerticalLayout addForm = new VerticalLayout(firstNameAdd, lastNameAdd, saveNewCustomer);
         HorizontalLayout main = new HorizontalLayout(layout, addForm);
@@ -57,8 +61,8 @@ public class VaadinUI extends UI {
         if (grid.asSingleSelect().isEmpty()) {
             setEditFormVisible(false);
         } else {
-            customer = grid.asSingleSelect().getValue();
-            binder.setBean(customer);
+            editCustomer = grid.asSingleSelect().getValue();
+            binder.setBean(editCustomer);
             setEditFormVisible(true);
         }
     }
@@ -74,7 +78,14 @@ public class VaadinUI extends UI {
         saveNewCustomer.setVisible(visible);
     }
 
-    private void saveCustomer() {
-        service.update(customer);
+    private void saveEditedCustomer() {
+        service.update(editCustomer);
         updateGrid();
-    }}
+    }
+    private void saveNewCustomer() {
+        service.addNewCustomer(addCustomer);
+        updateGrid();
+    }}    
+
+
+	

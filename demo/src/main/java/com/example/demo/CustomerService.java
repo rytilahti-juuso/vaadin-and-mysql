@@ -18,7 +18,17 @@ public class CustomerService {
                 (rs, rowNum) -> new Customer(rs.getLong("id"),
                 rs.getString("first_name"), rs.getString("last_name")));
     }
-
+    public void addNewCustomer(Customer customer) {
+    	System.out.println("INSERT INTO customers (first_name, last_name, id) "
+    			+ "VALUES('" + customer.getFirstName() + "', '" + customer.getLastName() +"', '"+ customer.getId()+ 
+    			"');");
+    	jdbcTemplate.update(
+    			"INSERT INTO customers (first_name, last_name, id) "
+    	    			+ "VALUES('" + customer.getFirstName() + "', '" + customer.getLastName() +"', '"+ customer.getId()+ 
+    	    			"');"
+    			);
+    	
+    }
     public void update(Customer customer) {
         jdbcTemplate.update(
             "UPDATE customers SET first_name=?, last_name=? WHERE id=?",
