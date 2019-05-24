@@ -64,7 +64,7 @@ public class VaadinUI extends UI {
             editCustomer = grid.asSingleSelect().getValue();
             binder.setBean(editCustomer);
             setEditFormVisible(true);
-        }
+		}
     }
 
     private void setEditFormVisible(boolean visible) {
@@ -83,8 +83,12 @@ public class VaadinUI extends UI {
         updateGrid();
     }
     private void saveNewCustomer() {
-        service.addNewCustomer(addCustomer);
+        service.addNewCustomer(addCustomer); 
+        addCustomer.setValuesToEmptyAndNewId();
+        firstNameAdd.setValue("");
+    	lastNameAdd.setValue("");
         updateGrid();
+        
     }}    
 
 

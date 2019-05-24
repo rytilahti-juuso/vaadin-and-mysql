@@ -19,9 +19,6 @@ public class CustomerService {
                 rs.getString("first_name"), rs.getString("last_name")));
     }
     public void addNewCustomer(Customer customer) {
-    	System.out.println("INSERT INTO customers (first_name, last_name, id) "
-    			+ "VALUES('" + customer.getFirstName() + "', '" + customer.getLastName() +"', '"+ customer.getId()+ 
-    			"');");
     	jdbcTemplate.update(
     			"INSERT INTO customers (first_name, last_name, id) "
     	    			+ "VALUES('" + customer.getFirstName() + "', '" + customer.getLastName() +"', '"+ customer.getId()+ 

@@ -12,11 +12,15 @@ public class Customer {
 		
 	}
 	public Customer () {
+		setValuesToEmptyAndNewId();
+		
+	}
+	
+	public void setValuesToEmptyAndNewId() {
 		Random rand = new Random();
 		this.id = Math.abs(rand.nextLong());
 		this.firstName = "";
 		this.lastName = "";
-		
 	}
 
 	public Long getId() {
